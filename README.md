@@ -22,7 +22,7 @@ Notes on data:
 ### Database schema
 The schema of the Redshift database is shown in the figure below. Tables *songplays* (fact table), *users*, *songs*, *artists* and *time* form a star schema optimized for queries on song play analysis. The chosen schema, compared to a highly normalized schema, allows for easier and faster data analytics by making the queries much simpler (fewer joins).
 
-[Database schema](db_schema.png)
+![Database schema](db_schema.png)
 
 ### ETL pipeline
 
