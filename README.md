@@ -13,7 +13,7 @@ DEP3 scripts perform the following:
 ### Data
 The startup's data is stored in a public bucket on S3 in two directories:
 * **s3://udacity-dend/song_data** - files with songs metadata. Each file contains metadata on a single song in the JSON format with the following fields: num_songs, artist_id, artist_latitude, artist_longitude, artist_location, artist_name, song_id, title, duration and year.
-* **s3://udacity-dend/log_data** - user activity log files. Each file contains data on user activity from a given day. Each line of this file contains data on a single activity of a user in JSON format with the following fields: artist, auth, firstName, gender, itemInSession, lastName, length, level, location, method, page, registration, sessionId, song, status, ts, userAgent and userId. Log entries concerning song streaming.
+* **s3://udacity-dend/log_data** - user activity log files. Each file contains data on user activity from a given day. Each line of this file contains data on a single activity of a user in JSON format with the following fields: artist, auth, firstName, gender, itemInSession, lastName, length, level, location, method, page, registration, sessionId, song, status, ts, userAgent and userId.
 
 Notes on data:
 * Song streaming events in the user activity log files have the *page* field set to *NextSong*.
@@ -27,9 +27,9 @@ The schema of the Redshift database is shown in the figure below. Tables *songpl
 ### ETL pipeline
 
 1. Load data from S3 to staging tables on Redshift
-  * data is loaded using the SQL COPY command with MAXERROR set to 1000 (SQL to SQL etl)
+  * data is loaded using the SQL COPY command with MAXERROR set to 1000
   * data is loaded from the log files to staging tables *as is* i.e. without any modifications or cleansing
-  * information on errors during copy is kept in the Redshift's *stl_load_errors* table
+  * information on errors during the copy is kept in the Redshift's *stl_load_errors* table
   * data is transferred directly from S3 to Redshift - the ETL server only issues the commands
 2. Load data from staging tables to analytics tables on Redshift
   * data is loaded using the SQL bulk INSERT command (one transaction per table)
@@ -52,13 +52,13 @@ The provided configuration file **dwh.cfg** has several fields which need to be 
 | CLUSTER| DB_PORT| Redshift database port (default is 5439)|
 | IAM ROLE| ARN| ARN of IAM role allowing Redshift to read from S3|
 
-*&ast;All field values in dwf.cfg must be inside single quotes*
+*&ast;All field values in dwh.cfg must be inside single quotes*
 
 ## Usage
 To create staging and analytics tables on Redshift:
 1. Navigate to the directory containing **create_tables.py**
 2. Run `python create_tables.py`
 
-To load data from S3 to analytics tables on Redshift:
+To load data from S3 to analytics tables on Redshift (via staging tables):
 1. Navigate to the directory containing **etl.py**
 2. Run `python etl.py`
