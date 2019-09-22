@@ -1,4 +1,4 @@
-# DEP3
+# DEP3 - Data Warehouse with Redshift
 Project 3 of the Data Engineering Nanodegree <br>
 Michal Pytlos, September 2019
 
